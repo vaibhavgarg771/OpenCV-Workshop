@@ -1,18 +1,20 @@
 import numpy as np
 import cv2
 
+# read an image 
 img = cv2.imread('caps.jpg', flags=cv2.IMREAD_COLOR)
+# convert the image from RGB to HSV values
 hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
 # define range of blue color in HSV
 lower_blue = np.array([110, 50, 50])
 upper_blue = np.array([130, 255, 255])
 
-# sensitivity = 25
+# define range of green color in HSV
 lower_green = np.array([35, 50, 50])
 upper_green = np.array([85, 255, 255])
 
-# Threshold the HSV image to get only blue colors
+# Threshold the HSV image to get only blue and green colors
 mask_blue = cv2.inRange(hsv, lower_blue, upper_blue)
 mask_green = cv2.inRange(hsv, lower_green, upper_green)
 
@@ -20,6 +22,7 @@ mask_green = cv2.inRange(hsv, lower_green, upper_green)
 res_blue = cv2.bitwise_and(img, img, mask= mask_blue)
 res_green = cv2.bitwise_and(img, img, mask=mask_green)
 
+#display the masks and the resultant images
 cv2.imshow('image',img)
 cv2.imshow('mask_blue',mask_blue)
 cv2.imshow('mask_green',mask_green)

@@ -1,15 +1,25 @@
+# This code tries to detect a particular color in a video 
+# and draw it's trail
+#I have done this for the color Blue
+
 from collections import deque
 import numpy as np
 import argparse
+
+#if this line gives an error just open CMD/ Terminal and run 
+# pip install imutils
 import imutils
 import cv2
  
+#creating a queue of default size 64 to store the previous positions 
+#of our color of interest and then joining those points
+
 # construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
 ap.add_argument("-b", "--buffer", type=int, default=64,
     help="max buffer size")
 args = vars(ap.parse_args())
-# define the lower and upper boundaries of the "green"
+# define the lower and upper boundaries of the "blue"
 # ball in the HSV color space, then initialize the
 # list of tracked points
 blueLower = (110, 50, 50)
@@ -24,6 +34,7 @@ while True:
  
     # resize the frame and convert it to the HSV
     # color space
+
     frame = imutils.resize(frame, width=600)
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
  
@@ -72,6 +83,7 @@ while True:
         # thickness = int(np.sqrt(args["buffer"] / float(i + 1)) * 2.5)
         cv2.line(frame, pts[i - 1], pts[i], (0, 0, 255), 2)
     
+    #flipping the frame so that you can see an image as you would in a mirror
     flip = cv2.flip(frame, 1)
     # show the frame to our screen
     cv2.imshow("Frame", flip)
